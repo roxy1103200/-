@@ -41,7 +41,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
-    @ApiOperation("员工进入")
+    @ApiOperation("员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
 
@@ -108,10 +108,35 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/status/{status}")
-    @ApiOperation("员工状态信息修改")
+    @ApiOperation("员工状态修改")
     public Result startOrStop(@PathVariable Integer status,Long id){
         log.info("员工状态修改：{} {}",status, id);
         employeeService.startOrStop(status,id);
         return Result.success();
+    }
+    /**
+     * 编辑员工信息
+     * @param
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("依据员工ID信息查询")
+    public Result<Employee> getById(@PathVariable Long id){
+        log.info("员工ID信息查询 {}",id );
+        Employee employee =  employeeService.getById(id);
+        return Result.success(employee);
+    }
+    /**
+     * 编辑员工信息
+     * @param
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("员工信息修改")
+    public Result update(@RequestBody EmployeeDTO employeeDTO){
+        log.info("员工信息修改：{}",employeeDTO);
+        employeeService.upDate(employeeDTO);
+        return Result.success();
+
     }
 }
