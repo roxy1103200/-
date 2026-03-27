@@ -64,6 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 //    @Override
     public void save(EmployeeDTO employeeDTO) {
             Employee employee = new Employee();
+        System.out.println("当前的线程的ID"+Thread.currentThread().getId());
             BeanUtils.copyProperties(employeeDTO,employee);
 
             //设置账号状态为启用
@@ -79,11 +80,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             //设置更新时间
             employee.setUpdateTime(LocalDateTime.now());
 
-            //Todo
             //设置创建人
-            employee.setCreateUser(10L);
+            employee.setCreateUser(BaseContext.getCurrentId());
             //设置更新人
-            employee.setUpdateUser(10L);
+            employee.setUpdateUser(BaseContext.getCurrentId());
 
             //保存到数据库
             employeeMapper.insert(employee);
